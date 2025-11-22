@@ -15,10 +15,7 @@ def get(request, api_token):
 @require_http_methods(["POST"])
 @is_authenticated
 def post(request, api_token):
-    try:
-        log = Log(json.loads(request.body), api_token.collector)
-        log.save()
-        return HttpResponse(status=200)
-    except:
-        return HttpResponse(status=500)
+    log = Log(raw_content=json.loads(request.body), collector=api_token.collector)
+    log.save()
+    return HttpResponse(status=200)
 
